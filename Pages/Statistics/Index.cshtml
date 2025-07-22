@@ -1,0 +1,42 @@
+@page
+@model StudentGradeTrackingSystem.Pages.Statistics.IndexModel
+@{
+    ViewData["Title"] = "Statistics";
+}
+
+<h1>Statistics</h1>
+
+<div>
+    <h3>Average Score By Student</h3>
+    <ul id="studentAverages"></ul>
+</div>
+
+<div class="mt-4">
+    <h3>Average Score By Course</h3>
+    <ul id="courseAverages"></ul>
+</div>
+
+@section Scripts {
+    <script>
+        async function loadStatistics() {
+            const studentResponse = await fetch('/api/statistics/student-averages');
+            const students = await studentResponse.json();
+            const studentList = document.getElementById('studentAverages');
+            students.forEach(s => {
+                const li = document.createElement('li');
+                li.textContent = `${s.student}: ${s.average.toFixed(2)}`;
+                studentList.appendChild(li);
+            });
+
+            const courseResponse = await fetch('/api/statistics/course-averages');
+            const courses = await courseResponse.json();
+            const courseList = document.getElementById('courseAverages');
+            courses.forEach(c => {
+                const li = document.createElement('li');
+                li.textContent = `${c.course}: ${c.average.toFixed(2)}`;
+                courseList.appendChild(li);
+            });
+        }
+        loadStatistics();
+    </script>
+}
