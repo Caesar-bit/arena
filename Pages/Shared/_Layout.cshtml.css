@@ -50,3 +50,11 @@ button.accept-policy {
 body.bg-dark {
   background-color: #121212 !important;
 }
+
+.hero {
+  background-image: url('/welcome2.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  padding: 6rem 0;
+}
