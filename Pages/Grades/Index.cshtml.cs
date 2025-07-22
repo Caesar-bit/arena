@@ -28,14 +28,14 @@ namespace StudentGradeTrackingSystem.Pages.Grades
             StudentAverages = Grades
                 .GroupBy(g => g.Student?.FullName)
                 .Where(g => g.Key != null)
-                .Select(g => (Student: g.Key!, Average: g.Average(x => x.Score)))
+                .Select(g => (Student: g.Key!, Average: g.Average(x => x.WeightedScore)))
                 .OrderBy(x => x.Student)
                 .ToList();
 
             CourseAverages = Grades
                 .GroupBy(g => g.Course?.CourseName)
                 .Where(g => g.Key != null)
-                .Select(g => (Course: g.Key!, Average: g.Average(x => x.Score)))
+                .Select(g => (Course: g.Key!, Average: g.Average(x => x.WeightedScore)))
                 .OrderBy(x => x.Course)
                 .ToList();
         }

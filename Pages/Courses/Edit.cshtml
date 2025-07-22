@@ -11,6 +11,21 @@
         <input asp-for="Course.CourseName" class="form-control" />
         <span asp-validation-for="Course.CourseName" class="text-danger"></span>
     </div>
+    <div class="form-group">
+        <label asp-for="Course.GradeLevel" class="control-label"></label>
+        <input asp-for="Course.GradeLevel" class="form-control" />
+        <span asp-validation-for="Course.GradeLevel" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Course.MidtermWeight" class="control-label"></label>
+        <input asp-for="Course.MidtermWeight" class="form-control" />
+        <span asp-validation-for="Course.MidtermWeight" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Course.FinalExamWeight" class="control-label"></label>
+        <input asp-for="Course.FinalExamWeight" class="form-control" />
+        <span asp-validation-for="Course.FinalExamWeight" class="text-danger"></span>
+    </div>
     <button type="submit" class="btn btn-primary">Save</button>
     <a asp-page="Index" class="btn btn-secondary">Back to List</a>
 </form>

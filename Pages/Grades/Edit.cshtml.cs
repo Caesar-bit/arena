@@ -20,6 +20,7 @@ namespace StudentGradeTrackingSystem.Pages.Grades
         public Grade Grade { get; set; } = new Grade();
         public SelectList StudentOptions { get; set; } = default!;
         public SelectList CourseOptions { get; set; } = default!;
+        public SelectList AssessmentOptions { get; set; } = default!;
         public async Task<IActionResult> OnGetAsync(int id)
         {
             Grade = await _context.Grades.Include(g => g.Student).Include(g => g.Course).FirstOrDefaultAsync(g => g.Id == id);
@@ -29,6 +30,7 @@ namespace StudentGradeTrackingSystem.Pages.Grades
             }
             StudentOptions = new SelectList(_context.Students.ToList(), "Id", "FullName");
             CourseOptions = new SelectList(_context.Courses.ToList(), "Id", "CourseName");
+            AssessmentOptions = new SelectList(new[] { "Quiz", "Assignment", "Midterm", "Final" });
             return Page();
         }
         public async Task<IActionResult> OnPostAsync()
@@ -37,6 +39,7 @@ namespace StudentGradeTrackingSystem.Pages.Grades
             {
                 StudentOptions = new SelectList(_context.Students.ToList(), "Id", "FullName");
                 CourseOptions = new SelectList(_context.Courses.ToList(), "Id", "CourseName");
+                AssessmentOptions = new SelectList(new[] { "Quiz", "Assignment", "Midterm", "Final" });
                 return Page();
             }
             _context.Attach(Grade).State = EntityState.Modified;

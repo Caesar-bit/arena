@@ -31,7 +31,7 @@ namespace StudentGradeTrackingSystem.Pages.Dashboard
             CourseAverages = grades
                 .GroupBy(g => g.Course?.CourseName)
                 .Where(g => g.Key != null)
-                .Select(g => (CourseName: g.Key!, AverageScore: g.Average(x => x.Score)))
+                .Select(g => (CourseName: g.Key!, AverageScore: g.Average(x => x.WeightedScore)))
                 .OrderBy(x => x.CourseName)
                 .ToList();
 
@@ -39,7 +39,7 @@ namespace StudentGradeTrackingSystem.Pages.Dashboard
             StudentsAtRisk = grades
                 .GroupBy(g => g.Student?.FullName)
                 .Where(g => g.Key != null)
-                .Select(g => (StudentName: g.Key!, AverageScore: g.Average(x => x.Score)))
+                .Select(g => (StudentName: g.Key!, AverageScore: g.Average(x => x.WeightedScore)))
                 .Where(x => x.AverageScore < 50)
                 .OrderBy(x => x.StudentName)
                 .ToList();

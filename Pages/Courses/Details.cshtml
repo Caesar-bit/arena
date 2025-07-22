@@ -9,6 +9,12 @@
     <dl class="row">
         <dt class="col-sm-2">Course Name</dt>
         <dd class="col-sm-10">@Model.Course.CourseName</dd>
+        <dt class="col-sm-2">Grade Level</dt>
+        <dd class="col-sm-10">@Model.Course.GradeLevel</dd>
+        <dt class="col-sm-2">Midterm %</dt>
+        <dd class="col-sm-10">@Model.Course.MidtermWeight</dd>
+        <dt class="col-sm-2">Final %</dt>
+        <dd class="col-sm-10">@Model.Course.FinalExamWeight</dd>
     </dl>
     <a asp-page="Index" class="btn btn-secondary">Back to List</a>
 </div>
