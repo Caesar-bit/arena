@@ -6,6 +6,7 @@
 
 <h1>Edit Student</h1>
 <form method="post">
+    <input type="hidden" asp-for="Student.Id" />
     <div class="form-group">
         <label asp-for="Student.StudentNumber" class="control-label"></label>
         <input asp-for="Student.StudentNumber" class="form-control" />
