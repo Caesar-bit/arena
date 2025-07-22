@@ -5,32 +5,25 @@
 }
 
 <h1>Grades</h1>
-<a class="btn btn-primary mb-2" asp-page="Create">Add Grade</a>
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>Student</th>
-            <th>Course</th>
-            <th>Score</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-    @foreach (var grade in Model.Grades)
-    {
-        <tr>
-            <td>@grade.Student?.FullName</td>
-            <td>@grade.Course?.CourseName</td>
-            <td>@grade.Score</td>
-            <td>
-                <a class="btn btn-info btn-sm" asp-page="Details" asp-route-id="@grade.Id">Details</a>
-                <a class="btn btn-warning btn-sm" asp-page="Edit" asp-route-id="@grade.Id">Edit</a>
-                <a class="btn btn-danger btn-sm" asp-page="Delete" asp-route-id="@grade.Id">Delete</a>
-            </td>
-        </tr>
-    }
-    </tbody>
-</table>
+<a class="btn btn-primary mb-3" asp-page="Create"><i class="fas fa-plus"></i> Add Grade</a>
+<div class="row row-cols-1 row-cols-md-3 g-4">
+@foreach (var grade in Model.Grades)
+{
+    <div class="col">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">@grade.Student?.FullName - @grade.Course?.CourseName</h5>
+                <p class="card-text">Score: <strong>@grade.Score</strong></p>
+                <div class="d-flex justify-content-end gap-2">
+                    <a class="btn btn-info btn-sm" asp-page="Details" asp-route-id="@grade.Id"><i class="fas fa-eye"></i></a>
+                    <a class="btn btn-warning btn-sm" asp-page="Edit" asp-route-id="@grade.Id"><i class="fas fa-edit"></i></a>
+                    <a class="btn btn-danger btn-sm" asp-page="Delete" asp-route-id="@grade.Id"><i class="fas fa-trash"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+</div>
 
 <h2>Average Grade per Student</h2>
 <canvas id="studentAvgChart" width="400" height="200"></canvas>
