@@ -18,11 +18,12 @@ namespace StudentGradeTrackingSystem.Pages.Grades
         public Grade Grade { get; set; } = new Grade();
         public async Task<IActionResult> OnGetAsync(int id)
         {
-            Grade = await _context.Grades.Include(g => g.Student).Include(g => g.Course).FirstOrDefaultAsync(g => g.Id == id);
-            if (Grade == null)
+            var grade = await _context.Grades.Include(g => g.Student).Include(g => g.Course).FirstOrDefaultAsync(g => g.Id == id);
+            if (grade == null)
             {
                 return NotFound();
             }
+            Grade = grade;
             return Page();
         }
         public async Task<IActionResult> OnPostAsync()

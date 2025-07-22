@@ -23,11 +23,12 @@ namespace StudentGradeTrackingSystem.Pages.Grades
         public SelectList AssessmentOptions { get; set; } = default!;
         public async Task<IActionResult> OnGetAsync(int id)
         {
-            Grade = await _context.Grades.Include(g => g.Student).Include(g => g.Course).FirstOrDefaultAsync(g => g.Id == id);
-            if (Grade == null)
+            var grade = await _context.Grades.Include(g => g.Student).Include(g => g.Course).FirstOrDefaultAsync(g => g.Id == id);
+            if (grade == null)
             {
                 return NotFound();
             }
+            Grade = grade;
             StudentOptions = new SelectList(_context.Students.ToList(), "Id", "FullName");
             CourseOptions = new SelectList(_context.Courses.ToList(), "Id", "CourseName");
             AssessmentOptions = new SelectList(new[] { "Quiz", "Assignment", "Midterm", "Final" });

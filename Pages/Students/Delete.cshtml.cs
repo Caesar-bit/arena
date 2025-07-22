@@ -17,11 +17,12 @@ namespace StudentGradeTrackingSystem.Pages.Students
         public Student Student { get; set; } = new Student();
         public async Task<IActionResult> OnGetAsync(int id)
         {
-            Student = await _context.Students.FindAsync(id);
-            if (Student == null)
+            var student = await _context.Students.FindAsync(id);
+            if (student == null)
             {
                 return NotFound();
             }
+            Student = student;
             return Page();
         }
         public async Task<IActionResult> OnPostAsync()
