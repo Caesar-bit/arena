@@ -1,0 +1,45 @@
+@page
+@model StudentGradeTrackingSystem.Pages.Grades.DetailsModel
+@{
+    ViewData["Title"] = "Grade Details";
+}
+
+<h1>Grade Details</h1>
+
+<div>
+    <h3>Student: @Model.Grade.Student?.FullName</h3>
+    <h3>Course: @Model.Grade.Course?.CourseName</h3>
+    <h3>Score: @Model.Grade.Score</h3>
+</div>
+
+<hr />
+
+<h4>Comments</h4>
+@if (Model.Comments.Count == 0)
+{
+    <p>No comments yet.</p>
+}
+else
+{
+    <ul>
+        @foreach (var comment in Model.Comments)
+        {
+            <li>@comment.Comment (@comment.CreatedAt.ToLocalTime().ToString("g"))</li>
+        }
+    </ul>
+}
+
+<hr />
+
+<h4>Add a Comment</h4>
+<form method="post" asp-page-handler="AddComment" asp-route-id="@Model.Grade.Id">
+    <div class="form-group">
+        <textarea asp-for="NewComment" class="form-control" rows="3"></textarea>
+        <span asp-validation-for="NewComment" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Add Comment</button>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

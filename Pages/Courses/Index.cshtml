@@ -1,0 +1,29 @@
+@page
+@model StudentGradeTrackingSystem.Pages.Courses.IndexModel
+@{
+    ViewData["Title"] = "Courses";
+}
+
+<h1>Courses</h1>
+<a class="btn btn-primary mb-2" asp-page="Create">Add Course</a>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Course Name</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var course in Model.Courses)
+    {
+        <tr>
+            <td>@course.CourseName</td>
+            <td>
+                <a class="btn btn-info btn-sm" asp-page="Details" asp-route-id="@course.Id">Details</a>
+                <a class="btn btn-warning btn-sm" asp-page="Edit" asp-route-id="@course.Id">Edit</a>
+                <a class="btn btn-danger btn-sm" asp-page="Delete" asp-route-id="@course.Id">Delete</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

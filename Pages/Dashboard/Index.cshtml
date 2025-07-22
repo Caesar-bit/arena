@@ -1,0 +1,75 @@
+@page
+@model StudentGradeTrackingSystem.Pages.Dashboard.IndexModel
+@{
+    ViewData["Title"] = "Dashboard";
+    var courseNames = System.Text.Json.JsonSerializer.Serialize(Model.CourseAverages.Select(c => c.CourseName));
+    var courseScores = System.Text.Json.JsonSerializer.Serialize(Model.CourseAverages.Select(c => c.AverageScore));
+    var gpaSemesters = System.Text.Json.JsonSerializer.Serialize(Model.GpaTrends.Select(g => g.Semester));
+    var gpaValues = System.Text.Json.JsonSerializer.Serialize(Model.GpaTrends.Select(g => g.Gpa));
+}
+
+<h1>Dashboard</h1>
+
+<h3>Course Average Comparisons</h3>
+<canvas id="courseAverageChart" width="400" height="200"></canvas>
+
+<h3>Students At Risk (Below 50%)</h3>
+@if (Model.StudentsAtRisk.Count == 0)
+{
+    <p>No students at risk.</p>
+}
+else
+{
+    <ul>
+        @foreach (var student in Model.StudentsAtRisk)
+        {
+            <li>@student.StudentName - Average Score: @student.AverageScore</li>
+        }
+    </ul>
+}
+
+<h3>GPA Trends</h3>
+<canvas id="gpaTrendChart" width="400" height="200"></canvas>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        var courseAverageCtx = document.getElementById('courseAverageChart').getContext('2d');
+        var courseAverageChart = new Chart(courseAverageCtx, {
+            type: 'bar',
+            data: {
+                labels: @Html.Raw(courseNames),
+                datasets: [{
+                    label: 'Average Score',
+                    data: @Html.Raw(courseScores),
+                    backgroundColor: 'rgba(54, 162, 235, 0.6)'
+                }]
+            },
+            options: {
+                scales: {
+                    y: { beginAtZero: true, max: 100 }
+                }
+            }
+        });
+
+        var gpaTrendCtx = document.getElementById('gpaTrendChart').getContext('2d');
+        var gpaTrendChart = new Chart(gpaTrendCtx, {
+            type: 'line',
+            data: {
+                labels: @Html.Raw(gpaSemesters),
+                datasets: [{
+                    label: 'GPA',
+                    data: @Html.Raw(gpaValues),
+                    fill: false,
+                    borderColor: 'rgba(255, 99, 132, 0.8)',
+                    tension: 0.1
+                }]
+            },
+            options: {
+                scales: {
+                    y: { beginAtZero: true, max: 4 }
+                }
+            }
+        });
+    </script>
+}

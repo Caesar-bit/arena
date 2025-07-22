@@ -1,0 +1,32 @@
+@page "{id:int}"
+@model StudentGradeTrackingSystem.Pages.Reports.StudentReportModel
+@{
+    ViewData["Title"] = "Student Report";
+}
+
+<h1>Student Report for @Model.Student?.FullName</h1>
+
+@if (Model.Student == null)
+{
+    <p>Student not found.</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Course</th>
+                <th>Score</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var grade in Model.Grades)
+            {
+                <tr>
+                    <td>@grade.Course?.CourseName</td>
+                    <td>@grade.Score</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

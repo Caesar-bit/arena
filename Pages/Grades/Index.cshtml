@@ -1,0 +1,87 @@
+@page
+@model StudentGradeTrackingSystem.Pages.Grades.IndexModel
+@{
+    ViewData["Title"] = "Grades";
+}
+
+<h1>Grades</h1>
+<a class="btn btn-primary mb-2" asp-page="Create">Add Grade</a>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Student</th>
+            <th>Course</th>
+            <th>Score</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var grade in Model.Grades)
+    {
+        <tr>
+            <td>@grade.Student?.FullName</td>
+            <td>@grade.Course?.CourseName</td>
+            <td>@grade.Score</td>
+            <td>
+                <a class="btn btn-info btn-sm" asp-page="Details" asp-route-id="@grade.Id">Details</a>
+                <a class="btn btn-warning btn-sm" asp-page="Edit" asp-route-id="@grade.Id">Edit</a>
+                <a class="btn btn-danger btn-sm" asp-page="Delete" asp-route-id="@grade.Id">Delete</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+<h2>Average Grade per Student</h2>
+<canvas id="studentAvgChart" width="400" height="200"></canvas>
+
+<h2>Average Grade per Course</h2>
+<canvas id="courseAvgChart" width="400" height="200"></canvas>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const studentLabels = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.StudentAverages.Select(x => x.Student)));
+        const studentData = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.StudentAverages.Select(x => x.Average)));
+        const courseLabels = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.CourseAverages.Select(x => x.Course)));
+        const courseData = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.CourseAverages.Select(x => x.Average)));
+
+        new Chart(document.getElementById('studentAvgChart'), {
+            type: 'bar',
+            data: {
+                labels: studentLabels,
+                datasets: [{
+                    label: 'Average Grade',
+                    data: studentData,
+                    backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: { beginAtZero: true, max: 100 }
+                }
+            }
+        });
+
+        new Chart(document.getElementById('courseAvgChart'), {
+            type: 'bar',
+            data: {
+                labels: courseLabels,
+                datasets: [{
+                    label: 'Average Grade',
+                    data: courseData,
+                    backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: { beginAtZero: true, max: 100 }
+                }
+            }
+        });
+    </script>
+}

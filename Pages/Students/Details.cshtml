@@ -1,0 +1,14 @@
+@page
+@model StudentGradeTrackingSystem.Pages.Students.DetailsModel
+@{
+    ViewData["Title"] = "Student Details";
+}
+
+<h1>Student Details</h1>
+<div>
+    <dl class="row">
+        <dt class="col-sm-2">Full Name</dt>
+        <dd class="col-sm-10">@Model.Student.FullName</dd>
+    </dl>
+    <a asp-page="Index" class="btn btn-secondary">Back to List</a>
+</div>
