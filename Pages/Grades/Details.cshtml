@@ -9,7 +9,8 @@
 <div>
     <h3>Student: @Model.Grade.Student?.FullName</h3>
     <h3>Course: @Model.Grade.Course?.CourseName</h3>
-    <h3>Score: @Model.Grade.Score</h3>
+    <h3>Assessment: @Model.Grade.AssessmentType (@Model.Grade.Weight%)</h3>
+    <h3>Score: @Model.Grade.Score (Weighted: @Model.Grade.WeightedScore.ToString("F2"))</h3>
 </div>
 
 <hr />

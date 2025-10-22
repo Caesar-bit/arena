@@ -14,19 +14,20 @@ namespace StudentGradeTrackingSystem.Pages.Courses
             _context = context;
         }
         [BindProperty]
-        public Course? Course { get; set; }
+        public Course Course { get; set; } = new Course();
         public async Task<IActionResult> OnGetAsync(int id)
         {
-            Course = await _context.Courses.FindAsync(id);
-            if (Course == null)
+            var course = await _context.Courses.FindAsync(id);
+            if (course == null)
             {
                 return NotFound();
             }
+            Course = course;
             return Page();
         }
         public async Task<IActionResult> OnPostAsync()
         {
-            var course = await _context.Courses.FindAsync(Course?.Id);
+            var course = await _context.Courses.FindAsync(Course.Id);
             if (course != null)
             {
                 _context.Courses.Remove(course);

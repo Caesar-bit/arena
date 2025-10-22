@@ -5,6 +5,7 @@
 }
 
 <h1>Student Report for @Model.Student?.FullName</h1>
+<p>ID: @Model.Student?.StudentNumber - Grade: @Model.Student?.GradeLevel - @Model.Student?.ContactEmail</p>
 
 @if (Model.Student == null)
 {
@@ -16,6 +17,7 @@ else
         <thead>
             <tr>
                 <th>Course</th>
+                <th>Assessment</th>
                 <th>Score</th>
             </tr>
         </thead>
@@ -24,7 +26,7 @@ else
             {
                 <tr>
                     <td>@grade.Course?.CourseName</td>
-                    <td>@grade.Score</td>
+                    <td>@grade.AssessmentType (@grade.Weight%) - @grade.Score (Weighted: @grade.WeightedScore.ToString("F2"))</td>
                 </tr>
             }
         </tbody>

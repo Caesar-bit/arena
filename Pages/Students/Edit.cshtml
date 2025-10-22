@@ -6,10 +6,26 @@
 
 <h1>Edit Student</h1>
 <form method="post">
+    <input type="hidden" asp-for="Student.Id" />
+    <div class="form-group">
+        <label asp-for="Student.StudentNumber" class="control-label"></label>
+        <input asp-for="Student.StudentNumber" class="form-control" />
+        <span asp-validation-for="Student.StudentNumber" class="text-danger"></span>
+    </div>
     <div class="form-group">
         <label asp-for="Student.FullName" class="control-label"></label>
         <input asp-for="Student.FullName" class="form-control" />
         <span asp-validation-for="Student.FullName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Student.GradeLevel" class="control-label"></label>
+        <input asp-for="Student.GradeLevel" class="form-control" />
+        <span asp-validation-for="Student.GradeLevel" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Student.ContactEmail" class="control-label"></label>
+        <input asp-for="Student.ContactEmail" class="form-control" />
+        <span asp-validation-for="Student.ContactEmail" class="text-danger"></span>
     </div>
     <button type="submit" class="btn btn-primary">Save</button>
     <a asp-page="Index" class="btn btn-secondary">Back to List</a>

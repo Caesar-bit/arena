@@ -29,6 +29,8 @@ var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    // Recreate database if schema is missing tables
+    context.Database.EnsureDeleted();
     context.Database.EnsureCreated();
     if (!context.Users.Any())
     {
@@ -50,25 +52,25 @@ using (var scope = app.Services.CreateScope())
     {
         var students = new[]
         {
-            new Student { FullName = "Alice Johnson" },
-            new Student { FullName = "Bob Smith" },
-            new Student { FullName = "Carol Lee" }
+            new Student { StudentNumber = "S001", FullName = "Alice Johnson", GradeLevel = "Grade 9", ContactEmail = "alice@example.com" },
+            new Student { StudentNumber = "S002", FullName = "Bob Smith", GradeLevel = "Grade 9", ContactEmail = "bob@example.com" },
+            new Student { StudentNumber = "S003", FullName = "Carol Lee", GradeLevel = "Grade 10", ContactEmail = "carol@example.com" }
         };
         var courses = new[]
         {
-            new Course { CourseName = "Mathematics" },
-            new Course { CourseName = "History" },
-            new Course { CourseName = "Science" }
+            new Course { CourseName = "Mathematics", GradeLevel = "Grade 9", MidtermWeight = 40, FinalExamWeight = 60 },
+            new Course { CourseName = "History", GradeLevel = "Grade 9", MidtermWeight = 30, FinalExamWeight = 70 },
+            new Course { CourseName = "Science", GradeLevel = "Grade 10", MidtermWeight = 50, FinalExamWeight = 50 }
         };
         context.Students.AddRange(students);
         context.Courses.AddRange(courses);
         context.SaveChanges();
         var grades = new[]
         {
-            new Grade { StudentId = students[0].Id, CourseId = courses[0].Id, Score = 95 },
-            new Grade { StudentId = students[1].Id, CourseId = courses[1].Id, Score = 88 },
-            new Grade { StudentId = students[2].Id, CourseId = courses[2].Id, Score = 76 },
-            new Grade { StudentId = students[0].Id, CourseId = courses[1].Id, Score = 82 }
+            new Grade { StudentId = students[0].Id, CourseId = courses[0].Id, AssessmentType = "Midterm", Weight = courses[0].MidtermWeight, Score = 95 },
+            new Grade { StudentId = students[1].Id, CourseId = courses[1].Id, AssessmentType = "Final", Weight = courses[1].FinalExamWeight, Score = 88 },
+            new Grade { StudentId = students[2].Id, CourseId = courses[2].Id, AssessmentType = "Midterm", Weight = courses[2].MidtermWeight, Score = 76 },
+            new Grade { StudentId = students[0].Id, CourseId = courses[1].Id, AssessmentType = "Quiz", Weight = 10, Score = 82 }
         };
         context.Grades.AddRange(grades);
         context.SaveChanges();

@@ -16,11 +16,12 @@ namespace StudentGradeTrackingSystem.Pages.Courses
         public Course Course { get; set; } = new Course();
         public async Task<IActionResult> OnGetAsync(int id)
         {
-            Course = await _context.Courses.FindAsync(id);
-            if (Course == null)
+            var course = await _context.Courses.FindAsync(id);
+            if (course == null)
             {
                 return NotFound();
             }
+            Course = course;
             return Page();
         }
     }

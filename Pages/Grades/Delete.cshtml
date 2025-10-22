@@ -12,8 +12,10 @@
         <dd class="col-sm-10">@Model.Grade.Student?.FullName</dd>
         <dt class="col-sm-2">Course</dt>
         <dd class="col-sm-10">@Model.Grade.Course?.CourseName</dd>
+        <dt class="col-sm-2">Assessment</dt>
+        <dd class="col-sm-10">@Model.Grade.AssessmentType (@Model.Grade.Weight%)</dd>
         <dt class="col-sm-2">Score</dt>
-        <dd class="col-sm-10">@Model.Grade.Score</dd>
+        <dd class="col-sm-10">@Model.Grade.Score (Weighted: @Model.Grade.WeightedScore.ToString("F2"))</dd>
     </dl>
     <form method="post">
         <input type="hidden" asp-for="Grade.Id" />

@@ -3,16 +3,20 @@
 @{
     ViewData["Title"] = "Home page";
 }
-<style>
-body {
-    background-image: url('/welcome2.jpg');
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-}
-</style>
+<div class="hero text-center text-white">
+    <h1 class="display-3 fw-bold">Student Grade Tracker</h1>
+    <p class="lead mb-4">Manage students, courses and grades in one place.</p>
 
-<div class="text-center">
-    <h1 class="display-4 text-white">Welcome</h1>
-    <p class="text-white">Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    @if (!User.Identity?.IsAuthenticated ?? true)
+    {
+        <a class="btn btn-primary btn-lg me-2" asp-page="/Account/Login"><i class="fas fa-sign-in-alt"></i> Login</a>
+        <a class="btn btn-success btn-lg" asp-page="/Account/Register"><i class="fas fa-user-plus"></i> Register</a>
+    }
+    else
+    {
+        <a class="btn btn-primary btn-lg me-2" asp-page="/Dashboard/Index"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+        <form method="post" asp-page="/Account/Logout" class="d-inline">
+            <button type="submit" class="btn btn-danger btn-lg"><i class="fas fa-sign-out-alt"></i> Logout</button>
+        </form>
+    }
 </div>
